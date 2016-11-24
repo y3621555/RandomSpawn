@@ -158,9 +158,18 @@ public class SpawnLocationManager {
                 location = world.getHighestBlockAt( (int)(center_x + getRandom(max_distance)), (int)(center_z + getRandom(max_distance))).getLocation();
             }
             findcount++;
+            
+            //if outside border
+            if(location.getX() > max_distance) location.setX(max_distance);
+            if(location.getY() > max_distance) location.setY(max_distance);
+            if(location.getX() < -max_distance) location.setX(-max_distance);
+            if(location.getY() < -max_distance) location.setY(-max_distance);
+            
+            //if bad Biome or lava
             if(Arrays.asList(blockBiomeList).contains(location.getBlock().getBiome())) return false;
             if(Arrays.asList(blockBlockList).contains(location.getBlock().getType())) return false;
             if(Arrays.asList(blockBlockList).contains(location.clone().add(0,-1,0).getBlock().getType())) return false;
+            if(Arrays.asList(blockBlockList).contains(location.clone().add(0,-2,0).getBlock().getType())) return false;
             return true;
         }
         
@@ -182,6 +191,7 @@ public class SpawnLocationManager {
         private int getRandom(double max) {
             return getRandom((int)max);
         }
+        
         private int getRandom(int max){
             return new Random().nextInt(max + 1) - (max / 2);
         }
