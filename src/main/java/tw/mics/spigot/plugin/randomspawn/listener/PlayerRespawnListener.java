@@ -1,7 +1,5 @@
 package tw.mics.spigot.plugin.randomspawn.listener;
 
-import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,17 +7,17 @@ import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
+import tw.mics.spigot.plugin.cupboard.CupboardAPI;
 import tw.mics.spigot.plugin.randomspawn.RandomSpawn;
 import tw.mics.spigot.plugin.randomspawn.config.Config;
 import tw.mics.spigot.plugin.randomspawn.utils.SpawnLocationManager;
 
+
 public class PlayerRespawnListener extends MyListener {
-    HashMap<Player, Location> player_bedlocation;
     public PlayerRespawnListener(RandomSpawn instance)
     {
         super(instance);
@@ -43,12 +41,21 @@ public class PlayerRespawnListener extends MyListener {
             p.setBedSpawnLocation(null);
           p.sendMessage(Config.LANG_BED_OUTSIDE_BORDER.getString());
             return false;
-//        } else if(false){ //TODO access check
-//            //Spawn location check
-//            p.setBedSpawnLocation(null);
-//            p.sendMessage(Config.LANG_BED_NO_ACCESS.getString());
-//            return false;
-        } else if(
+        }
+        boolean limit;
+        try {
+            Class.forName("tw.mics.spigot.plugin.cupboard.CupboardAPI");
+            limit = CupboardAPI.checkIsLimit(l,p);
+        } catch (ClassNotFoundException e) {
+            limit = false;
+        }
+        if(limit){
+            //Spawn location check
+            p.setBedSpawnLocation(null);
+            p.sendMessage(Config.LANG_BED_NO_ACCESS.getString());
+            return false;
+        }
+        if(
             l.getBlock().getType() == Material.LAVA ||
             l.getBlock().getType() == Material.STATIONARY_LAVA ||
             l.clone().add(0,1,0).getBlock().getType() == Material.LAVA ||
@@ -61,13 +68,7 @@ public class PlayerRespawnListener extends MyListener {
             return true; //床附近沒問題
         }
     }
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event){
-        Player p = event.getEntity();
-        if(p.getBedSpawnLocation() != null){
-            player_bedlocation.put(p, p.getBedSpawnLocation());
-        }
-    }
+    
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event){
 		Player p = event.getPlayer();
@@ -75,12 +76,6 @@ public class PlayerRespawnListener extends MyListener {
         //床復活確認
         if(event.isBedSpawn() && isPlayerBedSave(p)){
             return; //有床且床安全
-        }
-        
-        //床壞了但有床的紀錄
-        if(player_bedlocation.containsKey(p)){
-            event.setRespawnLocation(player_bedlocation.get(p));
-            player_bedlocation.remove(p);
         }
         
         //隨機重生

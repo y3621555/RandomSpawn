@@ -76,5 +76,12 @@
                <version>${mc-version}-${bukkit-ver}</version>
                <scope>provided</scope>
         </dependency>
+	    <dependency>
+		    <groupId>tw.mics.spigot.plugin.cupboard</groupId>
+		    <artifactId>Cupboard</artifactId>
+		    <version>1.0</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/../Cupboard/target/Cupboard.jar</systemPath>
+	    </dependency>
     </dependencies>
 </project>
