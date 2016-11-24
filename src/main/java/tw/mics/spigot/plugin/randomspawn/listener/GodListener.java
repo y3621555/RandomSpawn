@@ -9,6 +9,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import tw.mics.spigot.plugin.randomspawn.RandomSpawn;
@@ -43,7 +45,6 @@ public class GodListener extends MyListener {
             Location l_from = event.getFrom();
             Location l = event.getTo();
             l.setX(l_from.getX());
-            l.setY(l.getWorld().getHighestBlockYAt(l));
             l.setZ(l_from.getZ());
             event.setTo(l);
         }
@@ -66,6 +67,20 @@ public class GodListener extends MyListener {
     
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event){
+        if(god_list.contains(event.getPlayer())){
+            event.setCancelled(true);
+        }
+    }
+    
+    @EventHandler
+    public void onBucketEmpty(PlayerBucketEmptyEvent event){
+        if(god_list.contains(event.getPlayer())){
+            event.setCancelled(true);
+        }
+    }
+    
+    @EventHandler
+    public void onBucketFill(PlayerBucketFillEvent event){
         if(god_list.contains(event.getPlayer())){
             event.setCancelled(true);
         }
