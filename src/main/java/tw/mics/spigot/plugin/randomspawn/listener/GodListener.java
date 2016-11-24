@@ -41,7 +41,7 @@ public class GodListener extends MyListener {
             Location l_from = event.getFrom();
             Location l = event.getTo();
             l.setX(l_from.getX());
-            l.setY(l_from.getBlockY());
+            l.setY(l.getWorld().getHighestBlockYAt(l));
             l.setZ(l_from.getZ());
             event.setTo(l);
         }
@@ -54,4 +54,6 @@ public class GodListener extends MyListener {
             event.setCancelled(true);
         }
 	}
+	
+	//TODO 放敲方塊/打人
 }
