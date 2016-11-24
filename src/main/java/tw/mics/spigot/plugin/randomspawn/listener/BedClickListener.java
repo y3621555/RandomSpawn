@@ -25,10 +25,10 @@ public class BedClickListener extends MyListener {
         Block b = event.getClickedBlock();
         Player p = event.getPlayer();
         if(event.getAction() == Action.RIGHT_CLICK_BLOCK){
-            if(    
+            if(
                 b.getType() == Material.BED_BLOCK &&
                 b.getWorld().getEnvironment() == Environment.NORMAL &&
-                !SpawnLocationManager.checkPlayerSpawn(b.getLocation(), p) 
+                !SpawnLocationManager.checkPlayerSpawn(b.getLocation(), p)
             ){
                 p.setBedSpawnLocation(b.getLocation(), true);
                 p.sendMessage(Config.LANG_SPAWN_SET.getString());
