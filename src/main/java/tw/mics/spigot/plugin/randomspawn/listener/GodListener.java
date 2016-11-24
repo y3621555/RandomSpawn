@@ -19,7 +19,6 @@ public class GodListener extends MyListener {
         god_list = new HashSet<Player>();
     }
     
-    @EventHandler
     public void setGod(Player p, boolean god){
         if(god){
             god_list.add(p);
