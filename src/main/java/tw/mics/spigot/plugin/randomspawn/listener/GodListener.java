@@ -5,6 +5,8 @@ import java.util.HashSet;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -55,5 +57,17 @@ public class GodListener extends MyListener {
         }
 	}
 	
-	//TODO 放敲方塊/打人
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event){
+        if(god_list.contains(event.getPlayer())){
+            event.setCancelled(true);
+        }
+    }
+    
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event){
+        if(god_list.contains(event.getPlayer())){
+            event.setCancelled(true);
+        }
+    }
 }
