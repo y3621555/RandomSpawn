@@ -7,6 +7,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -69,6 +70,33 @@ public class PlayerRespawnListener extends MyListener {
         }
     }
     
+    //第一次加入
+    @EventHandler
+    public void onPlayerFirstJoin(PlayerLoginEvent event){
+        Player p = event.getPlayer();
+        if(Config.PLAYER_RANDOM_SPAWN_FIRSTJOIN.getBoolean() && 
+                !p.hasPlayedBefore())
+        {
+            if(SpawnLocationManager.useNewSpawn()){
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+                    @Override
+                    public void run() {
+                        p.sendMessage(Config.LANG_WORLD_SPAWN_EXPIRED.getString());
+                    }
+                });
+                SpawnLocationManager.teleportPlayerToNewSpawn(p);
+            } else {
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+                    @Override
+                    public void run() {
+                        p.teleport(SpawnLocationManager.getSpawnLocation());
+                        p.sendMessage(String.format(Config.LANG_WORLD_SPAWN_UPDATE_TIME.getString(), SpawnLocationManager.getTimeLeft()));
+                    }
+                });
+            }
+        }
+    }
+    
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event){
 		Player p = event.getPlayer();
@@ -81,6 +109,7 @@ public class PlayerRespawnListener extends MyListener {
         //隨機重生
         if(Config.PLAYER_RANDOM_SPAWN_RESPAWN.getBoolean()){
             if(SpawnLocationManager.useNewSpawn()){
+                p.sendMessage(Config.LANG_WORLD_SPAWN_EXPIRED.getString());
                 SpawnLocationManager.teleportPlayerToNewSpawn(event.getPlayer());
             } else {
                 event.setRespawnLocation(SpawnLocationManager.getSpawnLocation());
@@ -103,9 +132,9 @@ public class PlayerRespawnListener extends MyListener {
             //隨機重生
             if(Config.PLAYER_RANDOM_SPAWN_THE_END_PORTAL.getBoolean()){
                 if(SpawnLocationManager.useNewSpawn()){
+                    p.sendMessage(Config.LANG_WORLD_SPAWN_EXPIRED.getString());
                     SpawnLocationManager.teleportPlayerToNewSpawn(p);
                 } else {
-                    event.setTo(SpawnLocationManager.getSpawnLocation());
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
                         @Override
                         public void run() {

@@ -17,6 +17,7 @@ public enum Config {
     PLAYER_RANDOM_SPAWN_NEW_LOCATION_TIME("random-spawn.update-time", 1800, ""),
 
     LANG_SPAWN_SET("lang.spawn-set", "重生點已紀錄。", ""),
+    LANG_WORLD_SPAWN_EXPIRED("lang.world-spawn-expired", "重生點已經過期, 正在尋找新重生點...", ""),
     LANG_WORLD_SPAWN_UPDATED("lang.world-spawn-updated", "世界的重生點已經更新。", ""),
     LANG_WORLD_SPAWN_UPDATE_TIME("lang.world-spawn-update-time", "還有 %.0f 秒世界的重生點就會更新。", ""), 
     LANG_BED_OUTSIDE_BORDER("lang.bed-outside-border", "床在邊界外, 重生點已移除", ""), 

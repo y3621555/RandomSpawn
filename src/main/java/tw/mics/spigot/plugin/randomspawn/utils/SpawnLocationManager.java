@@ -85,7 +85,6 @@ public class SpawnLocationManager {
         
         SpawnFinder(Player p){
             player = p;
-            player.sendMessage("重生點已經過期, 正在尋找新重生點...");
             world = Bukkit.getServer().getWorld(Config.PLAYER_RANDOM_SPAWN_WORLD.getString());
             WorldBorder wb = world.getWorldBorder();
             max_distance = wb.getSize();
