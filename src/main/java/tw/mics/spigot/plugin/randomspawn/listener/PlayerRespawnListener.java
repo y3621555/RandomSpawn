@@ -7,7 +7,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -72,7 +72,7 @@ public class PlayerRespawnListener extends MyListener {
     
     //第一次加入
     @EventHandler
-    public void onPlayerFirstJoin(PlayerLoginEvent event){
+    public void onPlayerFirstJoin(PlayerJoinEvent event){
         Player p = event.getPlayer();
         if(Config.PLAYER_RANDOM_SPAWN_FIRSTJOIN.getBoolean() && 
                 !p.hasPlayedBefore())
