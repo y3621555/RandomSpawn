@@ -30,7 +30,7 @@ public class BedClickListener extends MyListener {
                 b.getWorld().getEnvironment() == Environment.NORMAL &&
                 !SpawnLocationManager.checkPlayerSpawn(b.getLocation(), p)
             ){
-                p.setBedSpawnLocation(b.getLocation(), true);
+                p.setBedSpawnLocation(b.getLocation());
                 p.sendMessage(Config.LANG_SPAWN_SET.getString());
                 event.setCancelled(true);
                 return;
