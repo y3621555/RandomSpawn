@@ -14,6 +14,7 @@ public enum Config {
     PLAYER_RANDOM_SPAWN_FIRSTJOIN("random-spawn.enable.first-join", true, ""),
     PLAYER_RANDOM_SPAWN_THE_END_PORTAL("random-spawn.enable.the-end-portal", true, ""),
     PLAYER_RANDOM_SPAWN_WORLD("random-spawn.world", "world", ""),
+    PLAYER_RANDOM_SPAWN_PROTECT_REDIS("random-spawn.protect-redis", 20, ""),
     PLAYER_RANDOM_SPAWN_USE_BORDER("random-spawn.location.use-border", false, "set true will ignore config below"),
     PLAYER_RANDOM_SPAWN_CENTER_X("random-spawn.location.center-x", 0, ""),
     PLAYER_RANDOM_SPAWN_CENTER_Z("random-spawn.location.center-z", 0, ""),

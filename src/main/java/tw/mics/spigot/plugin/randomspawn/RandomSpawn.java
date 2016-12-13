@@ -8,6 +8,7 @@ import tw.mics.spigot.plugin.randomspawn.config.Config;
 import tw.mics.spigot.plugin.randomspawn.listener.BedClickListener;
 import tw.mics.spigot.plugin.randomspawn.listener.GodListener;
 import tw.mics.spigot.plugin.randomspawn.listener.PlayerRespawnListener;
+import tw.mics.spigot.plugin.randomspawn.listener.SpawnProtectListener;
 
 public class RandomSpawn extends JavaPlugin {
     private static RandomSpawn INSTANCE;
@@ -19,6 +20,7 @@ public class RandomSpawn extends JavaPlugin {
         Config.load();
         new BedClickListener(this);
         new PlayerRespawnListener(this);
+        new SpawnProtectListener(this);
         god = new GodListener(this);
         this.getCommand("rsp").setExecutor(new RspCommand(this));
     }
