@@ -1,7 +1,6 @@
 package tw.mics.spigot.plugin.randomspawn.utils;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -81,19 +80,23 @@ public class SpawnLocationManager {
         float player_speed;
         final static int VIEW_DISTANCE = 8;
         final static int CHUNK_PER_TICK = 2;
-        int findcount;
         
         SpawnFinder(Player p){
             player = p;
             world = Bukkit.getServer().getWorld(Config.PLAYER_RANDOM_SPAWN_WORLD.getString());
-            WorldBorder wb = world.getWorldBorder();
-            max_distance = wb.getSize();
-            center_x = wb.getCenter().getX();
-            center_z = wb.getCenter().getZ();
+            if(Config.PLAYER_RANDOM_SPAWN_USE_BORDER.getBoolean()){
+                WorldBorder wb = world.getWorldBorder();
+                max_distance = wb.getSize();
+                center_x = wb.getCenter().getX();
+                center_z = wb.getCenter().getZ();
+            } else {
+                max_distance = Config.PLAYER_RANDOM_SPAWN_MAX_DISTANCE.getInt();
+                center_x = Config.PLAYER_RANDOM_SPAWN_CENTER_X.getInt();
+                center_z = Config.PLAYER_RANDOM_SPAWN_CENTER_Z.getInt();
+            }
             flag_finded = false;
             gen_x = -VIEW_DISTANCE;
             gen_z = -VIEW_DISTANCE;
-            findcount = 0;
             
             player_speed = player.getWalkSpeed();
             player.setWalkSpeed(0);
@@ -145,18 +148,7 @@ public class SpawnLocationManager {
         }
         
         boolean findNext(){
-            List<Player> players = world.getPlayers();
-            if(players.size() > 0 && findcount < 5){
-                Player p = players.get(new Random().nextInt(players.size()));
-                int distance = new Random().nextInt(500)+1000; //距離1000-1500
-                double angle = (new Random().nextDouble() * Math.PI * 2);
-                int x = p.getLocation().getBlockX() + (int)(Math.cos(angle) * distance);
-                int z = p.getLocation().getBlockZ() + (int)(Math.sin(angle) * distance);
-                location = world.getHighestBlockAt(x, z).getLocation();
-            } else {
-                location = world.getHighestBlockAt( (int)(center_x + getRandom(max_distance)), (int)(center_z + getRandom(max_distance))).getLocation();
-            }
-            findcount++;
+            location = world.getHighestBlockAt( (int)(center_x + getRandom(max_distance)), (int)(center_z + getRandom(max_distance))).getLocation();
             
             //if outside border
             if(location.getX() > max_distance) location.setX(max_distance);
