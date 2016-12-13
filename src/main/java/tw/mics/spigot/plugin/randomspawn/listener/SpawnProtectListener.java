@@ -49,6 +49,7 @@ public class SpawnProtectListener extends MyListener {
     private boolean isProtect(Location l){
         Location spawn = SpawnLocationManager.getSpawnLocation();
         if(
+            spawn != null &&
             l.getWorld() == spawn.getWorld() &&
             l.distance(spawn) < Config.PLAYER_RANDOM_SPAWN_PROTECT_REDIS.getInt()
         ){
