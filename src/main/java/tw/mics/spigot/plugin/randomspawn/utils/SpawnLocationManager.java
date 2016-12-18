@@ -77,7 +77,6 @@ public class SpawnLocationManager {
         Location location;
         int id;
         int gen_x, gen_z;
-        float player_speed;
         final static int VIEW_DISTANCE = 8;
         final static int CHUNK_PER_TICK = 2;
         
@@ -98,8 +97,6 @@ public class SpawnLocationManager {
             gen_x = -VIEW_DISTANCE;
             gen_z = -VIEW_DISTANCE;
             
-            player_speed = player.getWalkSpeed();
-            player.setWalkSpeed(0);
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RandomSpawn.getInstance(), new Runnable(){
                 @Override
                 public void run() {
@@ -166,11 +163,6 @@ public class SpawnLocationManager {
         
         private void cancelEffectAndTeleport(Location l){
             Bukkit.getServer().getScheduler().cancelTask(id);
-            if(player_speed == 0){
-                player.setWalkSpeed((float) 0.2);
-            } else {
-                player.setWalkSpeed(player_speed);
-            }
             
             player.removePotionEffect(PotionEffectType.BLINDNESS);
             RandomSpawn.getInstance().god.setGod(player, false);
