@@ -58,9 +58,9 @@ public class PlayerRespawnListener extends MyListener {
         }
         if(
             l.getBlock().getType() == Material.LAVA ||
-            l.getBlock().getType() == Material.STATIONARY_LAVA ||
+            l.getBlock().getType() == Material.LAVA_BUCKET ||
             l.clone().add(0,1,0).getBlock().getType() == Material.LAVA ||
-            l.clone().add(0,1,0).getBlock().getType() == Material.STATIONARY_LAVA
+            l.clone().add(0,1,0).getBlock().getType() == Material.LAVA_BUCKET
         ){
             p.setBedSpawnLocation(null);
           p.sendMessage(Config.LANG_BED_HAS_LAVA.getString());

@@ -51,9 +51,9 @@ public class SpawnLocationManager {
     }
     
     private static Material[] blockBlockList = {
-            Material.STATIONARY_LAVA,
+            Material.LAVA_BUCKET,
             Material.LAVA,
-            Material.STATIONARY_WATER,
+            Material.WATER_BUCKET,
             Material.WATER,
     };
     
@@ -62,7 +62,7 @@ public class SpawnLocationManager {
             Biome.DEEP_OCEAN,
             Biome.FROZEN_OCEAN,
             Biome.RIVER,
-            Biome.SWAMPLAND,
+            Biome.SWAMP,
     };
     
     private static class SpawnFinder implements Runnable{

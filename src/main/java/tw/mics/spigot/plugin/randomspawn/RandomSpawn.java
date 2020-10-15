@@ -30,7 +30,7 @@ public class RandomSpawn extends JavaPlugin {
         this.logDebug("Unregister Listener!");
         HandlerList.unregisterAll();
         this.logDebug("Unregister Schedule tasks!");
-        this.getServer().getScheduler().cancelAllTasks();
+       // this.getServer().getScheduler().cancelAllTasks();
     }
 
     public static RandomSpawn getInstance() {
